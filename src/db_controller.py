@@ -1,11 +1,11 @@
 
 from os import path
 
-from config import DB_FILENAME
-from utils import sendMsg
-from plain_controller import PlainController
-from dbutils import SqliteConnect, getRow
-from parse_utils import getNextToken, convertDateStr, convertTimeStr
+from ..config import DB_FILENAME
+from .utils import sendMsg
+from .dbutils import SqliteConnect, getRow
+from .parse_utils import getNextToken, convertDateStr, convertTimeStr
+from .plain_controller import PlainController
 
 
 ERROR_TEXT = "Text is missing; provide <command>(e.g. add) <date> {op: <time>} <text>"

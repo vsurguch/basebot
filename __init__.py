@@ -1,7 +1,7 @@
 
 from flask import Flask
-# from . import main
-import main
+
+from .src import main
 
 def create_app():
 

@@ -1,13 +1,12 @@
 
 import requests
 
+from .plain_controller import PlainController
+from .utils import sendMsg
+
 # from .log import log
 # from .plain_controller import PlainController
 # from .utils import sendMsg\
-
-from plain_controller import PlainController
-from log import log
-from utils import sendMsg
 
 owm_api_key = 'd75b49df56805a9219d8b50dc64ce42b'
 owm_url = 'https://api.openweathermap.org/data/2.5/weather'

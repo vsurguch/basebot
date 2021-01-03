@@ -1,8 +1,7 @@
 
 from threading import Thread
-# from .main_controller import sendMsg
-# from main_controller import sendMsg
-from utils import sendMsg
+from .utils import sendMsg
+
 
 class PlainController(object):
 

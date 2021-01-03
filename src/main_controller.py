@@ -2,14 +2,14 @@
 import json
 
 from flask import current_app
+from .utils import *
+from .plain_controller import PlainController
+from .weather_controller import WeatherContoller
+
 
 # from .utils import *
 # from .plain_controller import PlainController
 # from .weather_controller import WeatherContoller
-
-from utils import *
-# from plain_controller import PlainController
-from weather_controller import WeatherContoller
 
 
 def access_denied(chat):
@@ -39,7 +39,7 @@ def processUpdate(update, fake=False):
             resp_text = WeatherContoller.processThreading(chat_id, rest)
         else:
             processAttachments(update['message'])
-            # resp_text = PlainController.processThreading(chat_id, text)
-            resp_text = "controller not found"
+            resp_text = PlainController.processThreading(chat_id, text)
+            # resp_text = "controller not found"
         log(f"Resp message from controller: {resp_text}")
     return resp_text

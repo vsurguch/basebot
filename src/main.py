@@ -1,9 +1,11 @@
 
-from flask import Blueprint, request, current_app
+from flask import Blueprint, request
+
 # from . import  config
-import config
-from main_controller import processUpdate
-from utils import make_request_simple
+from .. import config
+from .main_controller import processUpdate
+from .utils import make_request_simple
+
 
 token = config.TOKEN
 url_base = 'https://api.telegram.org/'

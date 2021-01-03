@@ -1,11 +1,12 @@
 
-import requests
-from os import path
 from collections import namedtuple
+from os import path
+import requests
+
 # from . import config
 # from .log import log
-import config
-from log import log
+from .. import config
+from .log import log
 
 
 url_base = 'https://api.telegram.org/'

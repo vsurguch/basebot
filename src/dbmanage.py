@@ -1,5 +1,6 @@
 from os import path
-from dbutils import SqliteConnect, getRow
+
+from src.dbutils import SqliteConnect, getRow
 
 
 def create_table(db_filename):
