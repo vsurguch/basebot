@@ -42,8 +42,7 @@ def parse_msg(string):
 
 class DBController(PlainController):
 
-    db_filename = path.join(path.dirname(__file__), DB_FILENAME)
-    connection = SqliteConnect(db_filename)
+    connection = SqliteConnect(DB_FILENAME)
     RowClass = getRow('reminder',
                       ['chat_id', 'date', 'time', 'text', 'important'])
 
