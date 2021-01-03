@@ -13,7 +13,6 @@ def create_table(db_filename):
                             date='INTEGER',
                             time='INTEGER',
                             text='TEXT',
-                            complete='BOOLEAN',
                             important='BOOLEAN')
 
 
