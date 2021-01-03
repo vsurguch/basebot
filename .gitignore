@@ -11,5 +11,6 @@ __pycache__/
 #ignore .pyc files
 *.pyc
 
-
+#ignore config.py
+config.py
 
