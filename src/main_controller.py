@@ -5,6 +5,7 @@ from flask import current_app
 from .utils import *
 from .plain_controller import PlainController
 from .weather_controller import WeatherContoller
+from .db_controller import DBController
 
 
 # from .utils import *
@@ -37,6 +38,8 @@ def processUpdate(update, fake=False):
     else:
         if cmd == "pogoda" or cmd == "weather":
             resp_text = WeatherContoller.processThreading(chat_id, rest)
+        elif cmd == "remind":
+            resp_text = DBController.processThreading(chat_id, rest)
         else:
             processAttachments(update['message'])
             resp_text = PlainController.processThreading(chat_id, text)
