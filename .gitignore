@@ -1,0 +1,15 @@
+# ignore test files
+test*.py
+
+# ignore certain subfolders
+downloads/
+data/
+legacy/
+.idea/
+__pycache__/
+
+#ignore .pyc files
+*.pyc
+
+
+
