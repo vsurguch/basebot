@@ -1,6 +1,9 @@
 # ignore test files
 test*.py
 
+# ignore config
+config*.*
+
 # ignore certain subfolders
 downloads/
 data/
@@ -10,7 +13,4 @@ __pycache__/
 
 #ignore .pyc files
 *.pyc
-
-#ignore config.py
-config.py
 

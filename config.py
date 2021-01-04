@@ -5,4 +5,4 @@ USERS = {308634083,}
 TOKEN = ""
 OWM_KEY = ""
 NAME = "bot"
-DB_FILENAME = path.join(INSTANCE, "")
+DB_FILENAME = path.join(INSTANCE, "data/.sql")
