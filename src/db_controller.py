@@ -1,5 +1,4 @@
 
-from os import path
 
 from ..config import DB_FILENAME
 from .utils import sendMsg
