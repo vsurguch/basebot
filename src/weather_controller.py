@@ -1,12 +1,13 @@
 
 import requests
 
+from ..config import OWM_KEY
 from .plain_controller import PlainController
 from .utils import sendMsg
 
 
-owm_api_key = ''
 owm_url = 'https://api.openweathermap.org/data/2.5/weather'
+
 
 class WeatherContoller(PlainController):
 
@@ -17,7 +18,7 @@ class WeatherContoller(PlainController):
         city = data[0] if len(data) > 0 else "Riga"
         country = data[1] if len(data) > 1 else ""
 
-        url = f"{owm_url}?q={city},{country}&appid={owm_api_key}&units=metric"
+        url = f"{owm_url}?q={city},{country}&appid={OWM_KEY}&units=metric"
         resp_json = requests.get(url).json()
         code = resp_json['cod']
         if code == 200:
