@@ -12,7 +12,7 @@ owm_url = 'https://api.openweathermap.org/data/2.5/weather'
 class WeatherContoller(PlainController):
 
     @classmethod
-    def process(cls, chat_id, msg_text):
+    def process(cls, chat_id, msg_text, cmd=""):
         data = msg_text.split(" ")
 
         city = data[0] if len(data) > 0 else "Riga"

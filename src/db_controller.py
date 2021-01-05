@@ -15,14 +15,12 @@ ERROR_FORMAT = "Incomplete request; provide <command>(e.g. add) <date> {op: <tim
 def parse_msg(string):
 
     date_str, rest = getNextToken(string)
-    date = convertDateStr(date_str)
-    if (date is not None):
-        date_ts = date.timestamp()
+    date_ts = convertDateStr(date_str)
+    if (date_ts is not None):
         time_str, rest = getNextToken(rest)
         if time_str:
-            time = convertTimeStr(time_str)
-            if time is not None:
-                time_ts = time.total_seconds()
+            time_ts = convertTimeStr(time_str)
+            if time_ts is not None:
                 if rest:
                     text = rest
                 else:
@@ -50,7 +48,7 @@ class DBController(PlainController):
         pass
 
     @classmethod
-    def process(cls, chat_id, msg_text):
+    def process(cls, chat_id, msg_text, cmd=""):
 
         action, rest = getNextToken(msg_text)
 

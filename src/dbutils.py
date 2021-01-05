@@ -68,7 +68,7 @@ class SqliteConnect():
 
     def _execute(self, sql, values=None, commit=False):
         conn = self._get_conn()
-        conn.execute(sql, values)
+        conn.cursor().execute(sql, values)
         if commit:
             conn.commit()
         conn.close()
@@ -76,11 +76,13 @@ class SqliteConnect():
     def _get_generic(self, RowClass, sql_base, _limit=None, _offset=None, **kwargs):
         limit = f"LIMIT {_limit}" if _limit is not None else ''
         offset = f"OFFSET {_offset}" if _offset is not None else ''
-        condition = ' AND '.join([f'{item[0]}=\'{item[1]}\'' for item in kwargs.items()])
+        condition = ' AND '.join([f'{item}=?' for item in kwargs.keys()])
         condition = f"WHERE {condition}" if condition else ''
+        condition_values = [val for val in kwargs.values()] if condition else []
         sql = f"{sql_base} {condition} {limit} {offset}"
         conn = self._get_conn()
-        rows = [RowClass._make(row) for row in conn.execute(sql).fetchall()]
+        cur = conn.cursor()
+        rows = [RowClass._make(row) for row in cur.execute(sql, condition_values).fetchall()]
         conn.close()
         return rows
 
@@ -109,17 +111,17 @@ class SqliteConnect():
 
     def put(self, row):
         fields = row._fields
-        values = [str(val) for val in row]
+        values = [val for val in row]
         sql = f"INSERT INTO {type(row).__name__} ({','.join(fields[1:])}) VALUES ({','.join(['?',]*(len(values)-1))})"
         self._execute(sql, values[1:], commit=True)
 
     def delete(self, row):
         sql = f"DELETE FROM {type(row).__name__} WHERE id=?"
-        self._execute(sql, (str(row.id),), commit=True)
+        self._execute(sql, (row.id,), commit=True)
 
     def modify(self, row, **kwargs):
         sql = f"UPDATE {type(row).__name__} SET {','.join([f'{field}=?'for field in kwargs.keys()])} WHERE id=?"
-        values = [str(val) for val in kwargs.values()] + [str(row.id),]
+        values = [val for val in kwargs.values()] + [row.id,]
         self._execute(sql, values, commit=True)
         return row._replace(**kwargs)
 
