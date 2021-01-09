@@ -12,7 +12,9 @@ owm_url = 'https://api.openweathermap.org/data/2.5/weather'
 class WeatherContoller(PlainController):
 
     @classmethod
-    def process(cls, chat_id, msg_text, cmd=""):
+    def process(cls, chat_id, msg_text, cmd="", fake=False):
+
+        keyboard = None
         data = msg_text.split(" ")
 
         city = data[0] if len(data) > 0 else "Riga"
@@ -30,7 +32,12 @@ class WeatherContoller(PlainController):
             msg_text = f"Weather for {city}\nTemp {temp}\nMin temp {temp_min}\nMax temp {temp_max}\nFeels like {feels_like}\n{sky}"
         else:
             msg_text = "City not found"
-        resp = sendMsg({'chat_id': chat_id, 'text': msg_text})
-        return resp.text
+
+        if fake:
+            resp = msg_text
+        else:
+            resp = sendMsg(chat_id, msg_text, keyboard).text
+
+        return resp
 
 

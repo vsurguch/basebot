@@ -48,8 +48,9 @@ class DBController(PlainController):
         pass
 
     @classmethod
-    def process(cls, chat_id, msg_text, cmd=""):
+    def process(cls, chat_id, msg_text, cmd="", fake=False):
 
+        keyboard = None
         action, rest = getNextToken(msg_text)
 
         if (action == 'add' or action == 'Add') and rest:
@@ -66,9 +67,12 @@ class DBController(PlainController):
         else:
             result = ERROR_FORMAT
 
-        resp = sendMsg({'chat_id': chat_id, 'text': result})
+        if fake:
+            resp = result
+        else:
+            resp = resp = sendMsg(chat_id, result, keyboard).text
 
-        return resp.text
+        return resp
 
 
 

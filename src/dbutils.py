@@ -1,5 +1,6 @@
 from collections import namedtuple
 import sqlite3
+from .sql_comapision_enum import Comparision
 
 
 class Row():
@@ -73,13 +74,27 @@ class SqliteConnect():
             conn.commit()
         conn.close()
 
-    def _get_generic(self, RowClass, sql_base, _limit=None, _offset=None, **kwargs):
+    def _get_generic(self, RowClass, sql_base, _limit=None, _offset=None, _order=None, **kwargs):
         limit = f"LIMIT {_limit}" if _limit is not None else ''
         offset = f"OFFSET {_offset}" if _offset is not None else ''
-        condition = ' AND '.join([f'{item}=?' for item in kwargs.keys()])
-        condition = f"WHERE {condition}" if condition else ''
-        condition_values = [val for val in kwargs.values()] if condition else []
-        sql = f"{sql_base} {condition} {limit} {offset}"
+        order = f"ORDER BY {_order}" if _order is not None else ''
+
+        # condition = ' AND '.join([f'{item}=?' for item in kwargs.keys()])
+        # condition_values = [val for val in kwargs.values()] if condition else []
+        condition = ''
+        condition_values = []
+        for field, value in kwargs.items():
+            comp = Comparision.Equal.value
+            logical = 'AND'
+            if isinstance(value, tuple):
+                comp = value[0].value
+                condition_values.append(value[1])
+            else:
+                condition_values.append(value)
+            condition += f' {logical} ' + f'{field}{comp}?'
+
+        condition = f"WHERE {condition[5:]}" if condition else ''
+        sql = f"{sql_base} {condition} {order} {limit} {offset}"
         conn = self._get_conn()
         cur = conn.cursor()
         rows = [RowClass._make(row) for row in cur.execute(sql, condition_values).fetchall()]
@@ -101,9 +116,9 @@ class SqliteConnect():
         conn.executescript(sql)
         conn.close()
 
-    def get(self, RowClass, _limit=None, _offset=None, **kwargs):
+    def get(self, RowClass, _limit=None, _offset=None, _order=None, **kwargs):
         sql_base = f"SELECT * FROM {RowClass.__name__}"
-        return self._get_generic(RowClass, sql_base, _limit, _offset, **kwargs)
+        return self._get_generic(RowClass, sql_base, _limit, _offset, _order, **kwargs)
 
     def get_joined(self, selection, _limit=None, _offset=None, **kwargs):
         RowClass = selection.getRowClass()

@@ -13,9 +13,8 @@ from .db_controller import DBController
 # from .weather_controller import WeatherContoller
 
 
-def access_denied(chat):
-    return sendMsg({'chat_id': chat,
-             'text': 'Access denied', })
+def access_denied(chat_id):
+    return sendMsg(chat_id, 'Access denied', None)
 
 
 def processUpdate(update, fake=False):
@@ -45,4 +44,5 @@ def processUpdate(update, fake=False):
             resp_text = PlainController.processThreading(chat_id, text, cmd)
             # resp_text = "controller not found"
         log(f"Resp message from controller: {resp_text}")
+
     return resp_text

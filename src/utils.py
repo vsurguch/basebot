@@ -31,14 +31,29 @@ def make_request_json(command, body, files=None):
     return resp
 
 
-def sendMsg(msg):
+# def sendMsg(msg):
+#     body = {
+#         'chat_id': msg['chat_id'],
+#         'text': msg["text"]
+#     }
+#
+#     if 'keyboard' in msg:
+#         body['reply_markup'] = msg['keyboard']
+#
+#     command = 'sendMessage'
+#     resp = make_request_json(command, body)
+#     log(f"server reply to answer: {resp.text}")
+#     return resp
+
+
+def sendMsg(chat_id, text, keyboard):
     body = {
-        'chat_id': msg['chat_id'],
-        'text': msg["text"]
+        'chat_id': chat_id,
+        'text': text
     }
 
-    if 'keyboard' in msg:
-        body['reply_markup'] = msg['keyboard']
+    if keyboard is not None:
+        body['reply_markup'] = keyboard
 
     command = 'sendMessage'
     resp = make_request_json(command, body)

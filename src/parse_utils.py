@@ -24,6 +24,9 @@ def convertDateStr(string):
     return None
 
 
+def convertDate(d):
+    return datetime.fromtimestamp(d).strftime("%d-%m-%Y")
+
 def convertTimeStr(string):
 
     match = re.match("(\d{1,2})[\:\-](\d{1,2})",
