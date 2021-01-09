@@ -14,7 +14,7 @@ REVIEW_COMMAND = ('review', '/review', 'просмотреть')
 DELETE_COMMAND = ('delete', '/delete', 'удалить')
 
 def processUpdate(update, fake=False):
-    log(f'new update from: {json.dumps(update)}\n')
+    log(f'\nNew update from: {json.dumps(update)}')
     sender_id = update['message']['from']['id']
     sender_name = update['message']['from']['username']
     chat_id = update['message']['chat']['id']
@@ -44,6 +44,6 @@ def processUpdate(update, fake=False):
     else:
         resp_text = NextPleaseController.processThreading(chat_id, rest, cmd=cmd)
 
-    log(f"Resp message from controller: {resp_text}")
+    log(f"\nResp message from controller: {resp_text}")
 
     return resp_text

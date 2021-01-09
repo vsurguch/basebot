@@ -124,11 +124,13 @@ class NextPleaseController(DialogController):
                                       date=(Comparision.MoreEqual, int(datetime.today().timestamp())))
 
             if len(rows) > 0:
-                result = '\n'.join(map(str, cls.convertRowToStrList(rows[0], add_fields=False)))
+                result = '\n'.join(map(str, cls.convertRowToStrList(rows[0], add_fields=False)[1:-1]))
 
                 if cmd == 'delete':
                     cls.connection.delete(rows[0])
                     result = f"Удалена ближайшая запись:\n{result}"
+                else:
+                    result = f"Ваша ближайшая запись:\n{result}"
 
         if fake:
             resp = result

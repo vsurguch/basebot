@@ -52,12 +52,12 @@ def sendMsg(chat_id, text, keyboard):
         'text': text
     }
 
-    if keyboard is not None:
-        body['reply_markup'] = keyboard
+    kb = {'keyboard': [keyboard,]} if keyboard is not None else {'remove_keyboard': True}
+    body['reply_markup'] = kb
 
     command = 'sendMessage'
     resp = make_request_json(command, body)
-    log(f"server reply to answer: {resp.text}")
+    log(f"\nServer reply to answer: {resp.text}")
     return resp
 
 
@@ -69,7 +69,7 @@ def sendPhoto(msg, filepath):
     fp = open(filepath, 'rb')
     files = {'photo': fp}
     resp = make_request_json('sendPhoto', body, files=files)
-    log(f"server reply to answer: {resp.text}")
+    log(f"\nServer reply to answer: {resp.text}")
     fp.close()
     return resp
 
@@ -113,10 +113,10 @@ def downloadAndSaveFile(file_path, name='img.jpg'):
         if (resp.status_code == 200):
             with open(name, 'wb') as f:
                 f.write(resp.content)
-            log(f'file {file_path} downloaded and read')
+            log(f'\nFile {file_path} downloaded and read')
             loaded = True
     except Exception as e:
-        log(f'Exception while downloading and reading file. {e}')
+        log(f'\nException while downloading and reading file. {e}')
 
     return loaded
 

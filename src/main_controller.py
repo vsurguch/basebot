@@ -18,7 +18,7 @@ def access_denied(chat_id):
 
 
 def processUpdate(update, fake=False):
-    log(f'new update from: {json.dumps(update)}\n')
+    log(f'\nNew update from: {json.dumps(update)}')
     sender_id = update['message']['from']['id']
     sender_name = update['message']['from']['username']
     chat_id = update['message']['chat']['id']
@@ -43,6 +43,6 @@ def processUpdate(update, fake=False):
             processAttachments(update['message'])
             resp_text = PlainController.processThreading(chat_id, text, cmd)
             # resp_text = "controller not found"
-        log(f"Resp message from controller: {resp_text}")
+        log(f"\nResp message from controller: {resp_text}")
 
     return resp_text
